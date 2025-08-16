@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.nico.api.dto.LoginDTO;
 import com.nico.api.dto.UsuarioDTO;
 import com.nico.api.model.Usuario;
 import com.nico.api.repository.UsuarioRepository;
@@ -28,6 +29,17 @@ public class UsuarioService {
         usuario.setSenha(passwordEncoder.encode(usuarioDTO.getPassword()));
 
         return usuarioRepository.save(usuario);
+    }
+
+    public Usuario autenticar(LoginDTO loginDTO) {
+        Usuario usuario = usuarioRepository.findByEmail(loginDTO.getEmail())
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!passwordEncoder.matches(loginDTO.getPassword(), usuario.getSenha())) {
+            throw new RuntimeException("Senha incorreta");
+        }
+
+        return usuario;
     }
 
     public java.util.List<Usuario> listarTodos() {
