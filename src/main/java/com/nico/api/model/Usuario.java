@@ -1,8 +1,6 @@
 package com.nico.api.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,16 +13,12 @@ import lombok.Data;
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome de usuário é obrigatório")
-    private String username;
-
-    @NotBlank(message = "O nome completo é obrigatório")
-    private String nomeCompleto;
+    @NotBlank(message = "O nome é obrigatório")
+    private String nome;
 
     @NotBlank(message = "O email é obrigatório")
     @Email(message = "Email inválido")
@@ -32,12 +26,4 @@ public class Usuario {
 
     @NotBlank(message = "A senha é obrigatória")
     private String senha;
-
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.RH; // Por padrão, novos usuários são RH
-
-    public enum Role {
-        ADMIN,
-        RH
-    }
 }

@@ -23,16 +23,13 @@ public class UsuarioService {
         }
 
         Usuario usuario = new Usuario();
-        usuario.setUsername(usuarioDTO.getUsername());
-        usuario.setNomeCompleto(usuarioDTO.getNomeCompleto());
+        usuario.setNome(usuarioDTO.getName());
         usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
-        usuario.setRole(usuarioDTO.getRole());
+        usuario.setSenha(passwordEncoder.encode(usuarioDTO.getPassword()));
 
         return usuarioRepository.save(usuario);
     }
 
-    // Método para listar todos os usuários (apenas ADMIN pode acessar)
     public java.util.List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }
